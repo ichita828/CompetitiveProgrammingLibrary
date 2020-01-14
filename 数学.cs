@@ -8,9 +8,9 @@ public class Math2
         invfact = new long[N + 1];
         fact[0] = 1;
 
-        for (long i = 1; i <= N; ++i)
+        for (long i = 1; i <= N; ++i) 
         {
-            fact[i] = fact[i - 1] * i % MOD;
+            fact[i] = fact[i - 1] * i % MOD ;
         }
         invfact[N] = pow(fact[N], MOD - 2);
 
@@ -56,6 +56,7 @@ public class Math2
 
     public Dictionary<long, int> primefactorization(long N)
     {
+        
         var ret = new Dictionary<long, int>();
 
         for (long i = 2; i * i <= N; ++i)
