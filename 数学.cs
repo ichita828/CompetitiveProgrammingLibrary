@@ -1,7 +1,6 @@
-public class Math2
+public static class Math2
 {
-
-    public long pow(long i, long n, long MOD = 1000000007)
+    public static long pow(long i, long n, long MOD = 1000000007)
     {
         long res = 1;
         while (n > 0)
@@ -13,7 +12,7 @@ public class Math2
         return res;
     }
 
-    public long gcd(long i, long y)
+    public static long gcd(long i, long y)
     {
         while (y != 0)
         {
@@ -24,12 +23,12 @@ public class Math2
         return i;
     }
 
-    public long lcm(long i, long y)
+    public static long lcm(long i, long y)
     {
         return i * y / gcd(i, y);
     }
 
-    public Dictionary<long, int> primefactorization(long N)
+    public static Dictionary<long, int> primefactorization(long N)
     {
 
         var ret = new Dictionary<long, int>();
@@ -51,7 +50,7 @@ public class Math2
 
     }
 
-    public List<long> divisorenumrate(long N)
+    public static List<long> divisorenumrate(long N)
     {
         var ret = new List<long>();
 
@@ -70,7 +69,7 @@ public class Math2
 
     }
 
-    public void swap<T>(ref T a, ref T b)
+    public static void swap<T>(ref T a, ref T b)
     {
         var i = a;
         a = b;
