@@ -11,7 +11,7 @@ public class Factorical
 
         for (long i = 1; i <= N; ++i)
         {
-            fact[i] = fact[i - 1] * i % MOD;
+            fact[i] = Math2.fact[i - 1] * i % MOD;
         }
         invfact[N] = pow(fact[N], MOD - 2);
 

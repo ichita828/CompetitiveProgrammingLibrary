@@ -47,7 +47,6 @@ public static class Math2
         if (N >= 2) ret[N] = 1;
 
         return ret;
-
     }
 
     public static List<long> divisorenumrate(long N)
