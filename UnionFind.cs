@@ -1,7 +1,7 @@
 public class UnionFind
 {
     int[] par;
-    UnionFind(int n)
+    public UnionFind(int n)
     {
         par = Enumerable.Range(0, n).Select(_ => -1).ToArray();
     }
