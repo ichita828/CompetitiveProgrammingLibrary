@@ -21,7 +21,7 @@ public class UnionFind
         {
             return x;
         }
-        else return par[x] = root(par[x]);
+        else return (par[x] = root(par[x]));
     }
 
     public bool merge(int x, int y)
