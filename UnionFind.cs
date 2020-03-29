@@ -2,50 +2,49 @@ public class UnionFind
 {
     int _count;
     int[] par, sizes, rank;
-    public UnionFind(int n)
+    public UnionFind(int N)
     {
-        _count = n;
-        par = new int[n];
-        sizes = new int[n];
-        rank = new int[n];
-        for (int i = 0; i < n; ++i)
+        _count = N;
+        par = new int[N];
+        sizes = new int[N];
+        rank = new int[N];
+        for (int i = 0; i < N; ++i)
         {
             par[i] = i;
             sizes[i] = 1;
             rank[i] = 0;
         }
     }
-    int root(int x)
+    int Root(int X)
     {
-        if (par[x] == x)
+        if (par[X] == X)
         {
-            return x;
+            return X;
         }
-        else return (par[x] = root(par[x]));
+        else return (par[X] = Root(par[X]));
     }
-
-    public bool merge(int x, int y)
+    public bool Merge(int X, int Y)
     {
-        x = root(x);
-        y = root(y);
-        if (x == y) return false;
+        X = Root(X);
+        Y = Root(Y);
+        if (X == Y) return false;
         --_count;
-        if (rank[x] < rank[y])
+        if (rank[X] < rank[Y])
         {
-            par[x] = y;
-            sizes[y] += sizes[x];
+            par[X] = Y;
+            sizes[Y] += sizes[X];
         }
         else
         {
-            par[y] = x;
-            sizes[x] += sizes[y];
-            if (rank[x] == rank[y]) ++rank[x];
+            par[Y] = X;
+            sizes[X] += sizes[Y];
+            if (rank[X] == rank[Y]) ++rank[X];
         }
         return true;
     }
-    public bool issame(int x, int y) => root(x) == root(y);
-    public int count => _count;
-    public bool ispar(int x) => x == root(x);
-    public int getpar(int x) => root(x);
-    public int size(int x) => sizes[root(x)];
+    public bool IsSame(int X, int Y) => Root(X) == Root(Y);
+    public int Count => _count;
+    public bool IsParent(int X) => X == Root(X);
+    public int GetParent(int X) => Root(X);
+    public int Size(int X) => sizes[Root(X)];
 }

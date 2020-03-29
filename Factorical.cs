@@ -1,29 +1,21 @@
-
 public class Factorical
 {
-    public long[] fact;
-    public long[] invfact;
-    public void factoricalmodset(long N, long MOD = 1000000007)
+    public long[] Fact;
+    public long[] invFact;
+    public Factorical(long N, long MOD = 1000000007)
     {
-        fact = new long[N + 1];
-        invfact = new long[N + 1];
-        fact[0] = 1;
-
+        Fact = new long[N + 1];
+        invFact = new long[N + 1];
+        Fact[0] = 1;
         for (long i = 1; i <= N; ++i)
         {
-            fact[i] = fact[i - 1] * i % MOD;
+            Fact[i] = Fact[i - 1] * i % MOD;
         }
-        invfact[N] = pow(fact[N], MOD - 2);
-
+        invFact[N] = Pow(Fact[N], MOD - 2);
         for (long i = N; i > 0; --i)
         {
-            invfact[i - 1] = invfact[i] * i % MOD;
+            invFact[i - 1] = invFact[i] * i % MOD;
         }
-
     }
-
-    public long nCr(long n, long r, long MOD = 1000000007)
-    {
-        return (fact[n] * invfact[r] % MOD * invfact[n - r] % MOD);
-    }
+    public long Comb(long n, long r, long MOD = 1000000007) => Fact[n] * invFact[r] % MOD * invFact[n - r] % MOD;
 }

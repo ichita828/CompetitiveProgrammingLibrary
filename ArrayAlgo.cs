@@ -1,7 +1,6 @@
-public static class lis
+public static class Array_Algorithm
 {
-    const int INF = 1 << 29;
-    public static int LIS(int[] array)
+    public static int LIS(long[] array)
     {
         var len = array.Length;
         var dp = Enumerable.Range(0, len).Select(_ => INF).ToArray();
