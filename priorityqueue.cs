@@ -1,15 +1,15 @@
-public class PriorityQueue<T> where T : IComparable<T>
+public class PriorityQueue<T>
 {
     List<T> _item;
     public int Count { get { return _item.Count; } }
     bool _isascend { get; set; }
     public T Peek { get { return _item[0]; } }
     Comparison<T> Comp;
-    public PriorityQueue(bool IsAscend = true) : this(Comparer<T>.Default.Compare, IsAscend) { }
-    public PriorityQueue(Comparer<T> cmp, bool IsAscend, IEnumerable<T> list = null) : this(cmp.Compare, IsAscend, list) { }
+    public PriorityQueue(bool IsAscend = true, IEnumerable<T> list = null) : this(Comparer<T>.Default.Compare, IsAscend, list) { }
     public PriorityQueue(Comparison<T> cmp, bool IsAscend = true, IEnumerable<T> list = null)
     {
         _item = new List<T>();
+        _isascend = IsAscend;
         this.Comp = cmp;
         if (list != null)
         {
@@ -18,7 +18,7 @@ public class PriorityQueue<T> where T : IComparable<T>
         }
     }
 
-    private int Compare(int i, int j) => (_isascend ? 1 : -1) * _item[i].CompareTo(_item[j]);
+    private int Compare(int i, int j) => (_isascend ? -1 : 1) * Comp(_item[i], _item[j]);
     private void Swap(int i, int j) { var t = _item[i]; _item[i] = _item[j]; _item[j] = t; }
     private int Parent(int i)
         => (i - 1) >> 1;
