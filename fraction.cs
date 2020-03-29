@@ -1,86 +1,78 @@
-public class fraction
+public class Fraction
 {
     public int Numerator { get; set; }
     public int Denominator { get; set; }
-    public fraction(int x, int y) //  x / y
+    public Fraction(int X, int Y) //  x / y
     {
-
-        Numerator = x;
-        Denominator = y;
-        yakubun();
-
+        Numerator = X;
+        Denominator = Y;
+        Simplify();
     }
-    public static implicit operator fraction(int x)
+    public static implicit operator Fraction(int X) => new Fraction(X, 1);
+    public static explicit operator double(Fraction X) => (double)X.Numerator / (double)X.Denominator;
+    public void Simplify()
     {
-        return new fraction(x, 1);
-    }
-    public static explicit operator double(fraction x)
-    {
-        return (double)x.Numerator / (double)x.Denominator;
-    }
-    public void yakubun()
-    {
-        int x = (int)gcd((long)Numerator, (long)Denominator);
+        int x = (int)GCD((long)Numerator, (long)Denominator);
         Numerator /= x;
         Denominator /= x;
     }
-    public static void yakubun(ref fraction a)
+    public static void Simplify(ref Fraction A)
     {
-        int x = (int)gcd((long)a.Numerator, (long)a.Denominator);
-        a.Numerator /= x;
-        a.Denominator /= x;
+        int x = (int)GCD((long)A.Numerator, (long)A.Denominator);
+        A.Numerator /= x;
+        A.Denominator /= x;
     }
-    public static void tubun(ref fraction a, ref fraction b)
+    public static void tubun(ref Fraction A, ref Fraction B)
     {
-        int x = (int)lcm(a.Denominator, b.Denominator);
-        a.Numerator = a.Numerator * x / a.Denominator;
-        b.Numerator = b.Numerator * x / b.Denominator;
-        a.Denominator = x;
-        b.Denominator = x;
+        int x = (int)LCM(A.Denominator, B.Denominator);
+        A.Numerator = A.Numerator * x / A.Denominator;
+        B.Numerator = B.Numerator * x / B.Denominator;
+        A.Denominator = x;
+        B.Denominator = x;
     }
-    public static void write(fraction a)
+    public static void Write(Fraction A)
     {
-        io.write(a.Numerator, a.Denominator);
+        io.Write(A.Numerator, A.Denominator);
     }
 
-    public static fraction operator +(fraction a, fraction b)
+    public static Fraction operator +(Fraction a, Fraction b)
     {
         tubun(ref a, ref b);
         int nume = a.Numerator + b.Numerator;
         int deno = a.Denominator;
-        return new fraction(nume, deno);
+        return new Fraction(nume, deno);
     }
-    public static fraction operator -(fraction a, fraction b)
+    public static Fraction operator -(Fraction a, Fraction b)
     {
         tubun(ref a, ref b);
         int nume = a.Numerator - b.Numerator;
         int deno = a.Denominator;
-        var x = new fraction(nume, deno);
-        yakubun(ref x);
+        var x = new Fraction(nume, deno);
+        Simplify(ref x);
         return x;
     }
-    public static fraction operator *(fraction a, fraction b)
+    public static Fraction operator *(Fraction a, Fraction b)
     {
         int nume = a.Numerator * b.Numerator;
         int deno = a.Denominator * b.Denominator;
-        var x = new fraction(nume, deno);
-        yakubun(ref x);
+        var x = new Fraction(nume, deno);
+        Simplify(ref x);
         return x;
     }
-    public static fraction operator /(fraction a, fraction b)
+    public static Fraction operator /(Fraction a, Fraction b)
     {
         int nume = a.Numerator * b.Denominator;
         int deno = a.Denominator * b.Numerator;
-        var x = new fraction(nume, deno);
-        yakubun(ref x);
+        var x = new Fraction(nume, deno);
+        Simplify(ref x);
         return x;
     }
-    public static bool operator ==(fraction a, fraction b)
+    public static bool operator ==(Fraction a, Fraction b)
     {
-        fraction x = a - b;
-        return (double)x == 0;
+        Fraction x = a - b;
+        return x.Numerator == 0;
     }
-    public static bool operator !=(fraction a, fraction b)
+    public static bool operator !=(Fraction a, Fraction b)
     {
         return !(a == b);
     }
@@ -88,7 +80,7 @@ public class fraction
     public override bool Equals(object obj)
     {
         if (this.GetType() != obj.GetType()) return false;
-        var c = (fraction)obj;
+        var c = (Fraction)obj;
         return (c.Numerator == this.Numerator && c.Denominator == this.Denominator);
     }
 
