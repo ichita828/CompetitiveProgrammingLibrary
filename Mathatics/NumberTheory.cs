@@ -16,6 +16,34 @@ public static class NumberTheory
     if (N >= 2) ret[N] = 1;
     return ret;
   }
+  public static Dictionary<int, int> FactoricalPF(int N)
+  {
+    var ret = new Dictionary<int, int>();
+    for (int i = 2; i <= N; ++i)
+    {
+      int ni = i;
+      for (int j = 2; j * j <= ni; ++j)
+      {
+        int cnt = 0;
+        while (ni % j == 0)
+        {
+          ++cnt;
+          ni /= j;
+        }
+        if (cnt == 0) continue;
+        if (ret.ContainsKey(j))
+          ret[j] += cnt;
+        else ret[j] = cnt;
+      }
+      if (ni >= 2)
+      {
+        if (ret.ContainsKey(ni))
+          ret[ni] += 1;
+        else ret[ni] = 1;
+      }
+    }
+    return ret;
+  }
   public static List<long> DivisorEnumrate(long N)
   {
     var ret = new List<long>();
@@ -29,7 +57,7 @@ public static class NumberTheory
     }
     return ret;
   }
-  List<int> seive(int n)
+  public static List<int> seive(int n)
   {
     var ret = new List<int>();
     bool[] isPrime = new bool[n + 1];
@@ -49,7 +77,7 @@ public static class NumberTheory
     }
     return ret;
   }
-  bool isPrime(long n)
+  public static bool isPrime(long n)
   {
     for (int i = 2; i * i <= n; ++i)
     {
