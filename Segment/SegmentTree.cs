@@ -1,55 +1,35 @@
-public class SegmentTree<T>
-{
-    Func<T, T, T> F;
-    int sz;
+public class SegmentTree<T> {
+    int N;
     T[] seg;
-    T I;
-    public SegmentTree(int n, Func<T, T, T> f, T e, IList<T> lis = null)
-    {
+    T E;
+    Func<T, T, T> F;
+    public SegmentTree(T[] arr, T e, Func<T, T, T> f) {
+        E = e;
         F = f;
-        sz = 1;
-        while (sz < n) sz <<= 1;
-        seg = new T[(n << 1) - 1];
-        I = e;
-        for (int i = 0; i < seg.Length; ++i) seg[i] = I;
-        if (lis != null) for (int i = 0; i < n; ++i) Set(i, lis[i]);
-        AUpdate();
-    }
-    void Set(int k, T x)
-    {
-        seg[k + sz - 1] = x;
-    }
-    void Build()
-    {
-        for (int k = sz - 1; k > 0; --k)
-        {
-            seg[k] = F(seg[2 * k], seg[2 * k + 1]);
+        N = 1;
+        while (arr.Length > N)N <<= 1;
+        seg = new T[2 * N - 1];
+        Array.Fill(seg, E);
+        for (int i = 0; i < arr.Length; ++i) {
+            seg[i + N - 1] = arr[i];
+        }
+        for (int i = N - 2; i >= 0; --i) {
+            seg[i] = F(seg[2 * i + 1], seg[2 * i + 2]);
         }
     }
-    public void Update(int k, T x)
-    {
-        Set(k, x);
-        Update(k);
-    }
-
-    public void Update(int k)
-    {
-        int i = k + sz - 1;
-        while (i > 0)
-        {
-            i = i - 1 >> 1;
-            seg[i] = F(seg[i << 1 | 1], seg[i + 1 << 1]);
+    void Update(int k, T a) {
+        k += N - 1;
+        seg[k] = a;
+        while (k > 0) {
+            k = (k - 1) / 2;
+            seg[k] = F(seg[k * 2 + 1], seg[k * 2 + 2]);
         }
     }
-    public void AUpdate()
-    {
-        for (int i = sz - 2; i >= 0; i--)
-        {
-            seg[i] = F(seg[i << 1 | 1], seg[i + 1 << 1]);
-        }
+    public T Query(int a, int b, int k = 0, int l = 0, int r = -1) {
+        if (r < 0)r = N;
+        if (r <= a || b <= l)return E;
+        if (a <= l && r <= b)return seg[k];
+        int m = (l + r) / 2;
+        return F(Query(a, b, k * 2 + 1, l, m), Query(a, b, k * 2 + 2, m, r));
     }
-    public T at(int i) => seg[i + sz - 1];
-    public T run(int s, int t) => run(s, t, 0, 0, sz);
-    T run(int s, int t, int k, int l, int r) => r <= s || t <= l ? I : s <= l && r <= t ? seg[k]
-    : F(run(s, t, k << 1 | 1, l, l + r >> 1), run(s, t, k + 1 << 1, l + r >> 1, r));
 }

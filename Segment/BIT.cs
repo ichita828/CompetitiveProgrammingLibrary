@@ -1,36 +1,34 @@
-public class BIT
-{
-    int[] bit;
-    int n;
-    public BIT(int Maxnum)
-    {
-        this.n = Maxnum;
-        bit = new int[Maxnum + 1];
+public class BIT {
+    long[] bit;
+    int size;
+    public BIT(int N) {
+        bit = new long[N + 1];
+        size = N;
     }
-    //i(1indexed),Add x
-    public void add(int i, int x)
-    {
-        while (i <= n)
-        {
-            bit[i] += x;
-            i += i & -i;
+    public BIT(int N, IList<long> list) {
+        bit = new long[N + 1];
+        size = N;
+        for (int i = 0; i < N; ++i) {
+            Add(i + 1, list[i]);
         }
     }
     //[1,i]
-    public int sum(int i)
-    {
-        int ret = 0;
-        while (i > 0)
-        {
-            ret += bit[i];
-            i -= i & -i;
+    public long Sum(int i) {
+        long ret = 0;
+        for (int x = i; x > 0; x -= x & -x) {
+            ret += bit[x];
         }
         return ret;
     }
-    //[a,b]
-    public int sum(int a, int b)
-    {
-        return sum(b) - sum(a - 1);
+    //1indexed,[i,j]
+    public long Sum(int i, int j) {
+        return Sum(j) - Sum(i - 1);
+    }
+    //1indexed
+    public void Add(int i, long x) {
+        for (int y = i; y <= size; y += y & -y) {
+            bit[y] += x;
+        }
     }
 
 }
