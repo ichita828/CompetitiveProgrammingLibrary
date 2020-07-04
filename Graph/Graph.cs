@@ -16,7 +16,7 @@ public static class Graph
                 if (ret[e.Item2] > ret[v] + e.Item1)
                 {
                     ret[e.Item2] = ret[v] + e.Item1;
-                    pq.Enqueue(new Tuple<long, int>(ret[e.Item2], e.Item2));
+                    pq.Enqueue(new Tuple<long, int>(ret[e.Item2], e.Item2)); ;
                 }
             }
         }
